@@ -1,16 +1,3 @@
-//  //<>//
-// 04-03 | Damianos: Added collision detection, Brick.destroy function, Level_1.grid function
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
 final color red    = color(255, 0, 0); //<>// //<>//
 final color blue   = color(0, 0, 255);
 final color yellow = color(255, 255, 0);
@@ -40,26 +27,38 @@ void draw() {
   b.display();
   b.update();
 
+  // lastBrick is always rock bottom
   Brick lastBrick = l1.bricks.get(l1.bricks.size()-1);
-  if (bl.y <= (lastBrick.y+lastBrick.height)) {
+  Brick firstBrick = l1.bricks.get(0);
+  boolean checkY = false;
+
+  if (l1.shape.equals("pyramid")) {
+    checkY = bl.y >= (lastBrick.y - Brick.width) && bl.y <= (firstBrick.y + Brick.width);
+  } else if (l1.shape.equals("grid")) {
+    checkY = bl.y >= (firstBrick.y - Brick.width) && bl.y <= (lastBrick.y + Brick.width);
+  } else {
+    throw new Error("Please initialize the Level's shape");
+  }
+
+  if (checkY) {
     for (Brick br : l1.bricks) {
-      //System.out.println(bl.toString());
-      //System.out.println(br.toString());
-      //System.out.println((bl.x >= br.x && bl.x <= (bl.x+br.width)));
-      //System.out.println(collisionDetection(bl, br));
       if (!br.destroyed && collided(bl, br)) {
         System.out.println(distance(bl.x, bl.y, br.x, br.y));
         br.destroy();
       }
     }
   }
+  //System.out.println(l1.bricks.size());
+  //System.out.println(firstBrick.toString());
+  //System.out.println(lastBrick.toString());
+  //System.exit(0);
 }
 
 /**
  * @return boolean Whether the specified Brick collided with Ball
  */
 boolean collided(Ball ball, Brick brick) {
-  return (distance(brick.x, brick.y, ball.x, ball.y) <= (brick.width/2 + ball.s - 10)) ? true : false;
+  return (distance(brick.x, brick.y, ball.x, ball.y) <= (Brick.width/2 + ball.s - 5)) ? true : false;
 }
 
 /**
