@@ -1,6 +1,4 @@
-//import  //<>//
-
-class Level_1 { 
+class Level_1 {  //<>// //<>// //<>//
   ArrayList<Brick> bricks;
 
   // start coordinates of Bricks

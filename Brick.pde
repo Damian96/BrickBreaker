@@ -1,7 +1,14 @@
+// Brick types constants
+final int BRICK_NORMAL = 1; // wooden
+final int BRICK_SOLID = 2; // rock
+final int BRICK_STEEL = 3; // steel
+
 class Brick {
   public final static int width = 25;
   public final static int height = 25;
   private color fill = white;
+
+  protected int TYPE = BRICK_NORMAL;
 
   private boolean destroyed = false;
   protected int startX = 500;
@@ -11,6 +18,13 @@ class Brick {
   protected int y;
 
   Brick() {
+    TYPE = BRICK_NORMAL;
+    fill = white;
+  }
+
+  Brick(int t, color f) {
+    this.TYPE = t;
+    this.fill = f;
   }
 
   /**
@@ -75,6 +89,6 @@ class Brick {
   }
 
   public String toString() {
-    return "Brick[x:" + this.x + ",y:" + this.y + ",width:" + this.width + ",destroyed:" + this.destroyed + "]";
+    return "Brick[x:" + this.x + ",y:" + this.y + ",width:" + Brick.width + ",destroyed:" + this.destroyed + ",type:" + this.TYPE + ",fill:" + this.fill + "]";
   }
 }
